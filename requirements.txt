@@ -1,0 +1,17 @@
+beautifulsoup4==4.12.2
+bs4==0.0.1
+cached-property==1.5.2
+certifi==2023.5.7
+charset-normalizer==3.1.0
+chevron==0.14.0
+frozendict==2.3.8
+genanki==0.13.0
+icrawler==0.6.6
+idna==3.4
+lxml==4.9.2
+Pillow==9.5.0
+PyYAML==6.0
+requests==2.31.0
+six==1.16.0
+soupsieve==2.4.1
+urllib3==2.0.3
