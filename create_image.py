@@ -8,34 +8,24 @@ import os
 
 root_dir_images = os.getcwd() + '/images'
 
-def get_images_from_google(word):
-    google_crawler = GoogleImageCrawler(storage={'root_dir': root_dir_images})
+def get_images_from_unsplash(word, headers):
+    base_pic_url = "https://unsplash.com/s/photos/"
+    pic_full_url = base_pic_url + word
 
-    filters = {
+    response_pic = requests.get(pic_full_url, headers=headers)
+    soup = BeautifulSoup(response_pic.text, "lxml") #html.parser
+    data = soup.find("div", class_ = 'mItv1').find_all('img')
 
-        'size': 'medium',
-        'type': 'photo',
-        'license': 'commercial,modify'
-    }
-    google_crawler.crawl(word, filters=filters, max_num=2)
+    image_urls = [image['src'] for image in data]
 
-def convert_png_to_jpg():
-    files = os.listdir(root_dir_images)
-    for file in files:
-        if file.endswith('.png'):
-            image = Image.open(root_dir_images + '/' + file)        
-            image = image.convert('RGB')
-            image.save(root_dir_images + '/' + file[:6] + '.jpg')
+    count = 0
+    for image_url in image_urls[1:5:2]:
+        count += 1
+        response = requests.get(image_url, stream=True)
+        with open(root_dir_images+ '/' + word + str(count) + '.jpg', 'wb') as out_file:
+            shutil.copyfileobj(response.raw, out_file)
 
-def rename_jpg(word):
-    count = 1
-    files = os.listdir(root_dir_images)
-    for file in files:
-        if file.endswith('.jpg'):
-            os.rename(os.path.join(root_dir_images, file), os.path.join(root_dir_images, word + str(count) + '.jpg'))
-            count += 1
-            
-def get_images_from_stock(word, headers):
+def get_images_from_istockphoto(word, headers):
     base_pic_url = "https://www.istockphoto.com/ru/search/2/image?phrase="
     url_encoded_string = quote(word)
     pic_full_url = base_pic_url + url_encoded_string
@@ -79,10 +69,8 @@ def delete_collages():
             os.remove(os.path.join(os.getcwd(), file))
     
 def create_image_collage(word, headers):
-    get_images_from_google(word)
-    convert_png_to_jpg()
-    rename_jpg(word)
-    get_images_from_stock(word, headers)
+    get_images_from_unsplash(word, headers)
+    get_images_from_istockphoto(word, headers)
     create_collage(word)
     delete_images(word)
 
