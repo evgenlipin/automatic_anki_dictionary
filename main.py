@@ -48,9 +48,10 @@ def main():
     my_package = genanki.Package(my_deck)    
     
     with open('words.txt', 'r', encoding='utf-8') as rfile:
-        lines = [line.strip().strip('*').lower() for line in rfile.readlines()]
+        lines = [line.strip().strip('*').lower() for line in rfile.readlines() if line.strip()]
 
     for word in lines:
+        print("The word '" + word + "' is loaded...")
         word_url = dictionary_url + word
         response_word = requests.get(word_url, headers=headers)
         soup = BeautifulSoup(response_word.text, "lxml") #html.parser
@@ -80,6 +81,7 @@ def main():
     clean_words_txt()
     delete_soundfile()
     delete_collages()
+    print("The program is finished")
     
 if __name__ == "__main__":
     main()

@@ -8,23 +8,6 @@ import os
 
 root_dir_images = os.getcwd() + '/images'
 
-def get_images_from_unsplash(word, headers):
-    base_pic_url = "https://unsplash.com/s/photos/"
-    pic_full_url = base_pic_url + word
-
-    response_pic = requests.get(pic_full_url, headers=headers)
-    soup = BeautifulSoup(response_pic.text, "lxml") #html.parser
-    data = soup.find("div", class_ = 'mItv1').find_all('img')
-
-    image_urls = [image['src'] for image in data]
-
-    count = 0
-    for image_url in image_urls[1:5:2]:
-        count += 1
-        response = requests.get(image_url, stream=True)
-        with open(root_dir_images+ '/' + word + str(count) + '.jpg', 'wb') as out_file:
-            shutil.copyfileobj(response.raw, out_file)
-
 def get_images_from_istockphoto(word, headers):
     base_pic_url = "https://www.istockphoto.com/ru/search/2/image?phrase="
     url_encoded_string = quote(word)
@@ -36,8 +19,11 @@ def get_images_from_istockphoto(word, headers):
 
     image_urls = [image['src'] for image in data]
 
-    count = 2
-    for image_url in image_urls[:2]:
+    if not os.path.exists(root_dir_images):
+        os.makedirs(root_dir_images)
+
+    count = 0
+    for image_url in image_urls[:8:2]:
         count += 1
         response = requests.get(image_url, stream=True)
         with open(root_dir_images+ '/' + word + str(count) + '.jpg', 'wb') as out_file:
@@ -69,7 +55,6 @@ def delete_collages():
             os.remove(os.path.join(os.getcwd(), file))
     
 def create_image_collage(word, headers):
-    get_images_from_unsplash(word, headers)
     get_images_from_istockphoto(word, headers)
     create_collage(word)
     delete_images(word)
