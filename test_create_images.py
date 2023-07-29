@@ -7,4 +7,4 @@ def main(word, headers):
     get_images_from_istockphoto(word, headers)
 
 if __name__ == "__main__":
-    main(word="mellifluous", headers=headers)
+    main(word="though", headers=headers)

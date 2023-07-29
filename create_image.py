@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 import shutil
 from icrawler.builtin import GoogleImageCrawler
-from PIL import Image
+from PIL import Image, UnidentifiedImageError
 import os
 
 root_dir_images = os.getcwd() + '/images'
@@ -48,16 +48,16 @@ def delete_images(word):
             os.remove(os.path.join(root_dir_images, file))
     os.removedirs(root_dir_images)
 
-def delete_collages():
-    files = os.listdir(os.getcwd())
-    for file in files:
-        if file.endswith('.jpg'):
-            os.remove(os.path.join(os.getcwd(), file))
-    
 def create_image_collage(word, headers):
     get_images_from_istockphoto(word, headers)
-    create_collage(word)
+    try:
+        create_collage(word)
+    except UnidentifiedImageError:
+        delete_images(word)
+        return False
+    
     delete_images(word)
+    return True
 
 if __name__ == "__main__":
     create_image_collage()
