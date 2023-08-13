@@ -1,3 +1,23 @@
+[English version](#english-version) | [Русская версия](#russian-version)
+
+# Automatic Anki Dictionary 📚
+
+This program allows you to create sets of Anki flashcards from a list of words. It uses the `requests` and `BeautifulSoup` libraries to extract data about words from the Cambridge dictionary website, and then uses the `genanki` library to create Anki flashcards with this information. The program also creates a collage of four suitable images for each word.
+
+## How to Run 🚀
+
+1. Clone the repository using the command `git clone [repository URL]`.
+2. Install the required libraries by running the command `pip install -r requirements.txt`.
+3. Create a `words.txt` file with a list of words that you want to add to the set of flashcards.
+4. Run the program using the command `python main.py`.
+5. The program will create an `.apkg` file with a set of Anki flashcards that can be imported into the Anki application.
+
+In case of unexpected errors, you can run the `clean.sh` script to remove unnecessary files.
+
+If the program is unable to create a flashcard for a particular word, it will add that word to the `problem_words.txt` file.
+
+## Requirements
+
 # Автоматический словарь Anki 📚
 
 Эта программа позволяет создавать наборы карточек Anki из списка слов. Она использует библиотеки `requests` и `BeautifulSoup` для извлечения данных о словах с сайта словаря Кембриджа, а затем использует библиотеку `genanki` для создания карточек Anki с этой информацией. Программа также создает коллаж из четырех подходящих картинок для каждого слова.
