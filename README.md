@@ -8,7 +8,7 @@ This program allows you to create sets of Anki flashcards from a list of words. 
 
 1. Clone the repository using the command `git clone [repository URL]`.
 2. Install the required libraries by running the command `pip install -r requirements.txt`.
-3. Create a `words.txt` file with a list of words that you want to add to the set of flashcards.
+3. Add the words you want to include in the set of flashcards to the words.txt file, one word per line.
 4. Run the program using the command `python main.py`.
 5. The program will create an `.apkg` file with a set of Anki flashcards that can be imported into the Anki application.
 
