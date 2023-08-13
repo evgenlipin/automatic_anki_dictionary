@@ -34,7 +34,6 @@ def perser_cambrige(headers, cambridge_base_url, cambridge_dict_url, word, rever
     definition = data.find("div", class_ = "def ddef_d db").text
     try:
         example_sentence = data.find("span", class_ = "eg deg").text
-        print(example_sentence)
     except AttributeError:
         example_sentence = parser_reverso(headers, reverso_dict_url, word)
     pronanciation = data.find("span", class_ = "ipa dipa lpr-2 lpl-1").text 
