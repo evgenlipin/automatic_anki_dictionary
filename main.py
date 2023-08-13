@@ -14,26 +14,42 @@ def get_sound_word(sound_url, word, headers):
     with open(word + '.mp3', 'wb') as f:
         f.write(response_sound.content)
 
-def perser_cambrige(headers, base_url, dictionary_url, word):
+def parser_reverso(headers, reverso_dict_url, word):
+    word_url = reverso_dict_url + word
+    response_word = requests.get(word_url, headers=headers)
+    soup = BeautifulSoup(response_word.text, "lxml") #html.parser
+    data = soup.find("section", id='examples-content')
+    data_example_sentence = data.find("div", class_="example")
+    example_sentence = data_example_sentence.find("div", class_= "src ltr").text.strip()
+    return example_sentence
+
+def perser_cambrige(headers, cambridge_base_url, cambridge_dict_url, word, reverso_dict_url):
     print('The word "' + word + '" is loaded...')
-    word_url = dictionary_url + word
+    word_url = cambridge_dict_url + word
     response_word = requests.get(word_url, headers=headers)
     soup = BeautifulSoup(response_word.text, "lxml") #html.parser
     data = soup.find("div", class_ = 'pr entry-body__el')
     
     type_word = data.find("span", class_ = "pos dpos").text
-    definition = data.find("div", class_ = "def ddef_d db").text[:-2]
-    example_sentence = data.find("span", class_ = "eg deg").text
+    definition = data.find("div", class_ = "def ddef_d db").text
+    try:
+        example_sentence = data.find("span", class_ = "eg deg").text
+        print(example_sentence)
+    except AttributeError:
+        example_sentence = parser_reverso(headers, reverso_dict_url, word)
     pronanciation = data.find("span", class_ = "ipa dipa lpr-2 lpl-1").text 
-    sound_url = base_url + data.find("source", type = "audio/mpeg")['src']
+    sound_url = cambridge_base_url + data.find("source", type = "audio/mpeg")['src']
 
     get_sound_word(sound_url, word, headers)
 
     return type_word, definition, example_sentence, pronanciation
 
 def main():
-    base_url = 'https://dictionary.cambridge.org'
-    dictionary_url = 'https://dictionary.cambridge.org/us/dictionary/english/'
+    cambridge_base_url = 'https://dictionary.cambridge.org'
+    cambridge_dict_url = 'https://dictionary.cambridge.org/us/dictionary/english/'
+
+    reverso_dict_url = 'https://context.reverso.net/translation/english-russian/'
+
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0;Win64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36'
     }
@@ -75,7 +91,7 @@ def main():
         for word in lines:
             if word:
                 try:
-                    type_word, definition, example_sentence, pronanciation = perser_cambrige(headers, base_url, dictionary_url, word)
+                    type_word, definition, example_sentence, pronanciation = perser_cambrige(headers, cambridge_base_url, cambridge_dict_url, word, reverso_dict_url)
                 except AttributeError:
                     problem_words.append(word)
                     print("Parsing Error\n")
