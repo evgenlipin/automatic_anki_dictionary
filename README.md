@@ -1,4 +1,4 @@
-[English version](#автоматический-словарь-anki-) | [Русская версия](#russian-version)
+[English version](#automatic-anki-dictionary-) | [Русская версия](#автоматический-словарь-anki-)
 
 # Automatic Anki Dictionary 📚
 
