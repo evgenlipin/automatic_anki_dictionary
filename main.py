@@ -68,10 +68,10 @@ def main():
     templates=[
         {
         'name': 'Card 1',
-        'qfmt': "<div style='font-family: Arial; font-size: 60px;color:#FF80DD;'>{{word}}</div><hr>{{sound}}<hr><div style='font-family: Arial; font-size: 25px;color:#79005E;'>{{type}}</div><div style='font-family: Arial; font-size: 25px;color:#AB2B52;'>{{ipa}}</div>",
-        'afmt': "<hr id=answer><div style='font-family: Arial; color:#FF80DD;'>{{FrontSide}}</div><hr><div  style='font-family: Arial; color:#00aaaa; text-align:left;'>Meaning: {{meaning}}</div><hr><div  style='font-family: Arial; color:#9CFFFA; text-align:left;'>&nbsp;→&nbsp;Example: {{example}}</div><hr>{{pic}}",
+        'qfmt': "<div style='font-family: Arial; font-size: 60px;color:#FF80DD;'>{{word}}{{sound}}</div><hr><div style='font-family: Arial; font-size: 25px;color:#79005E;'>{{type}}</div><div style='font-family: Arial; font-size: 25px;color:#AB2B52;'>{{ipa}}</div>",
+        'afmt': "<div id=answer style='font-family: Arial; color:#FF80DD;'>{{FrontSide}}</div><hr><div  style='font-family: Arial; color:#00aaaa; text-align:left;'>Meaning: {{meaning}}</div><hr><div  style='font-family: Arial; color:#9CFFFA; text-align:left;'>&nbsp;→&nbsp;Example: {{example}}</div><hr>{{pic}}",
         },
-    ], css= '.card {font-family: arial; font-size: 20px; text-align: center; color: black; background-color: white;}')
+    ], css= '.card {font-family: arial; font-size: 20px; text-align: center; color: black; background-color: black;}')
 
     my_deck = genanki.Deck(
     1686686578,
