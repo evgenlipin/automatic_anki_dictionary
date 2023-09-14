@@ -7,7 +7,7 @@ This program allows you to create sets of Anki flashcards from a list of words. 
 ## How to Run 🚀
 
 1. Clone the repository using the command `git clone [repository URL]`.
-2. Create a virtual environment (optional but recommended for isolation) `python3 -m venv venv` and `source venv/bin/activate`.
+2. Create a virtual environment in repository folder(optional but recommended for isolation) `python3 -m venv venv` and `source venv/bin/activate`.
 3. Install the required libraries by running the command `pip install -r requirements.txt`.
 4. Add the words you want to include in the set of flashcards to the words.txt file, one word per line.
 5. Run the program using the command `python main.py`.
@@ -26,7 +26,7 @@ If the program is unable to create a flashcard for a particular word, it will ad
 ## Как запустить 🚀
 
 1. Скопируйте репозиторий с помощью команды `git clone [URL репозитория]`.
-2. Создайте виртуальное окружение (по желанию, но рекомендуется для изоляции) `python3 -m venv venv` and `source venv/bin/activate`.
+2. Создайте виртуальное окружение в папке репозитория(по желанию, но рекомендуется для изоляции) `python3 -m venv venv` and `source venv/bin/activate`.
 3. Установите необходимые библиотеки, выполнив команду `pip install -r requirements.txt`.
 4. Добавьте построчно в файл `words.txt` слова, которые вы хотите добавить в набор карточек.
 5. Запустите программу с помощью команды `python main.py`.
