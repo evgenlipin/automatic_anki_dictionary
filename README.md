@@ -13,8 +13,6 @@ This program allows you to create sets of Anki flashcards from a list of words. 
 5. Run the program using the command `python main.py`.
 6. The program will create an `.apkg` file with a set of Anki flashcards that can be imported into the Anki application.
 
-In case of unexpected errors, you can run the `clean.sh` script to remove unnecessary files.
-
 If the program is unable to create a flashcard for a particular word, it will add that word to the `problem_words.txt` file.
 
 ## Requirements
@@ -31,7 +29,5 @@ If the program is unable to create a flashcard for a particular word, it will ad
 4. Добавьте построчно в файл `words.txt` слова, которые вы хотите добавить в набор карточек.
 5. Запустите программу с помощью команды `python main.py`.
 6. Программа создаст файл `.apkg` с набором карточек Anki, который можно импортировать в приложение Anki.
-
-В случае непредвиденных ошибок вы можете запустить команду `python clean.py`, чтобы удалить лишние файлы.
 
 Если программа не смогла создать карточку для какого-то слова, она добавит это слово в файл `problem_words.txt`.
