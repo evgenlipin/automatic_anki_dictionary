@@ -2,7 +2,6 @@ from urllib.parse import quote
 import requests
 from bs4 import BeautifulSoup
 import shutil
-from icrawler.builtin import GoogleImageCrawler
 from PIL import Image, UnidentifiedImageError
 import os
 
