@@ -61,9 +61,7 @@ def process_word(word):
     except AttributeError as e:
         return None
 
-    example_sentence_2 = parser_reverso(word)
-    example_sentence_3 = parser_reverso(word)
-    create_image_collage(root_dir_data, word, definition, example_sentence, example_sentence_2, example_sentence_3)
+    create_image_collage(root_dir_data, word, definition, example_sentence)
     
     return type_word, definition, example_sentence, pronanciation
 
@@ -118,7 +116,7 @@ def main():
 
                 my_note = genanki.Note(
                 model=my_model,
-                fields=[word, type_word, pronanciation, definition, example_sentence, f"[sound:{root_dir_data}/{word}.mp3]", f"<img src='{root_dir_data}/collage_{word}.jpg'>"])
+                fields=[word, type_word, pronanciation, definition, example_sentence, f"[sound:{word}.mp3]", f"<img src='collage_{word}.jpg'>"])
                 
                 my_deck.add_note(my_note)
                 my_package.media_files.append(f'{root_dir_data}/{word}.mp3')

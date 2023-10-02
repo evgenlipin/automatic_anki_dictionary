@@ -17,12 +17,12 @@ async def get_images(prompt, file_name):
         print(f"Generation Image Error: {e}\n")
 
 # asynchronous function for creating list of commands
-async def get_images_prodia(word, definition, example_sentence, example_sentence_2,  example_sentence_3): 
+async def get_images_prodia(word, definition, example_sentence): 
     prompts = [
-        f'{definition}({word})',
+        f'{word} - {definition}',
         f'{example_sentence}',
-        f'{example_sentence_2}',
-        f'{example_sentence_3}'
+        f'A scene describing the word "{word}" which means {definition}',
+        f'Representation of the word "{word}" which means {definition}'
     ]
 
     if not os.path.exists(root_dir_images):
@@ -48,7 +48,7 @@ def create_collage(root_dir_data,word):
         collage.paste(image_resize, positions_images[i-1])
     collage.save(f'{root_dir_data}/collage_{word}.jpg')
 
-def create_image_collage(root_dir_data, word, definition, example_sentence, example_sentence_2, example_sentence_3):
-    run(get_images_prodia(word, definition, example_sentence, example_sentence_2, example_sentence_3))
+def create_image_collage(root_dir_data, word, definition, example_sentence):
+    run(get_images_prodia(word, definition, example_sentence))
     create_collage(root_dir_data, word)
     shutil.rmtree(root_dir_images)
