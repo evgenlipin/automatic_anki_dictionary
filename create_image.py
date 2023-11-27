@@ -22,7 +22,7 @@ async def get_images_prodia(word, definition, example_sentence):
         f'{word} - {definition}',
         f'{example_sentence}',
         f'A scene describing the word "{word}" which means {definition}',
-        f'Representation of the word "{word}" which means {definition}'
+        f'Simple scene describing the word "{word}" which means {definition}'
     ]
 
     if not os.path.exists(root_dir_images):
