@@ -1,10 +1,12 @@
+import os
+import shutil
+import random
 import requests
 from bs4 import BeautifulSoup
 import genanki
-import os
+
 from create_image import create_image_collage
-import random
-import shutil
+
 
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0;Win64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36"
@@ -66,7 +68,7 @@ def process_word(word):
     print(f'The word "{word}" is loading...')
     try:
         type_word, definition, example_sentence, pronanciation = perser_cambrige(word)
-    except AttributeError as e:
+    except AttributeError:
         return None
 
     create_image_collage(root_dir_data, word, definition, example_sentence)
@@ -102,7 +104,7 @@ def main():
     my_package = genanki.Package(my_deck)
     problem_words = []
 
-    if os.path.exists("words.txt") == False:
+    if os.path.exists("words.txt") is False:
         print("'words.txt' doen't exist")
     elif os.stat("words.txt").st_size == 0:
         print('"words.txt" list is empty')
@@ -126,8 +128,8 @@ def main():
                         pronanciation,
                     ) = process_word(word)
                     print("Success\n")
-                except TypeError as e:
-                    print(f"Processing Error\n")
+                except TypeError:
+                    print("Processing Error\n")
                     problem_words.append(word)
                     continue
 
