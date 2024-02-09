@@ -2,33 +2,36 @@ import os
 import shutil
 import random
 import requests
+from fake_useragent import UserAgent
 from bs4 import BeautifulSoup
 import genanki
 
 from create_image import create_image_collage
 
 
+ua = UserAgent()
 headers = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0;Win64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36"
+    "User-Agent": ua.random    
 }
 root_dir_data = f"{os.getcwd()}/data"
 
 
-# cleaning "words.txt"
 def clean_words_txt():
+    '''clenning words.txt'''
     with open("words.txt", "w", encoding="utf-8") as wfile:
         wfile.write("")
 
 
-# saving soundfile
+
 def get_sound_word(sound_url, word):
+    '''saving soundfile'''
     response_sound = requests.get(sound_url, headers=headers)
     with open(f"{root_dir_data}/{word}.mp3", "wb") as f:
         f.write(response_sound.content)
 
 
-# parsing examles from reverso.net
 def parser_reverso(word):
+    '''parsing examles from reverso.net'''
     word_url = f"https://context.reverso.net/translation/english-russian/{word}"
     response_word = requests.get(word_url, headers=headers)
     soup = BeautifulSoup(response_word.text, "lxml")  # html.parser
@@ -40,8 +43,8 @@ def parser_reverso(word):
     return random.choice(list_exaples)
 
 
-# parsing data of word from cambridge.org
 def perser_cambrige(word):
+    '''parsing data of word from cambridge.org'''
     word_url = f"https://dictionary.cambridge.org/dictionary/english/{word}"
     response_word = requests.get(word_url, headers=headers)
     soup = BeautifulSoup(response_word.text, "lxml")  # html.parser

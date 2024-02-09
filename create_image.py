@@ -1,15 +1,16 @@
-from PIL import Image
 import os
-import freeGPT
 from io import BytesIO
 from asyncio import run, gather
 import shutil
+from PIL import Image
+
+import freeGPT
 
 root_dir_images = f"{os.getcwd()}/data/images"
 
 
-# asynchronous function for creating and saving image generation
 async def get_images(prompt, file_name):
+    '''asynchronous function for creating and saving image generation'''
     try:
         resp = await getattr(freeGPT, "prodia").Generation().create(prompt)
         with Image.open(BytesIO(resp)) as image:
@@ -18,8 +19,8 @@ async def get_images(prompt, file_name):
         print(f"Generation Image Error: {e}\n")
 
 
-# asynchronous function for creating list of commands
 async def get_images_prodia(word, definition, example_sentence):
+    '''asynchronous function for creating list of commands'''
     prompts = [
         f"{word} - {definition}",
         f"{example_sentence}",
@@ -38,8 +39,8 @@ async def get_images_prodia(word, definition, example_sentence):
     await gather(*tasks)
 
 
-# creating collage from 4 gereratic pictures
 def create_collage(root_dir_data, word):
+    '''creating collage from 4 gereratic pictures'''
     collage = Image.new("RGB", (1600, 400))
     positions_images = [(0, 0), (400, 0), (800, 0), (1200, 0)]
     for i in range(1, 5):
