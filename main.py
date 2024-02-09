@@ -1,3 +1,5 @@
+"""automatic dictionary"""
+
 import os
 import shutil
 import random
@@ -10,30 +12,27 @@ from create_image import create_image_collage
 
 
 ua = UserAgent()
-headers = {
-    "User-Agent": ua.random    
-}
+headers = {"User-Agent": ua.random}
 root_dir_data = f"{os.getcwd()}/data"
 
 
 def clean_words_txt():
-    '''clenning words.txt'''
+    """clenning words.txt"""
     with open("words.txt", "w", encoding="utf-8") as wfile:
         wfile.write("")
 
 
-
 def get_sound_word(sound_url, word):
-    '''saving soundfile'''
-    response_sound = requests.get(sound_url, headers=headers)
+    """saving soundfile"""
+    response_sound = requests.get(sound_url, timeout=5, headers=headers)
     with open(f"{root_dir_data}/{word}.mp3", "wb") as f:
         f.write(response_sound.content)
 
 
 def parser_reverso(word):
-    '''parsing examles from reverso.net'''
+    """parsing examles from reverso.net"""
     word_url = f"https://context.reverso.net/translation/english-russian/{word}"
-    response_word = requests.get(word_url, headers=headers)
+    response_word = requests.get(word_url, timeout=5, headers=headers)
     soup = BeautifulSoup(response_word.text, "lxml")  # html.parser
     examples = soup.find_all("div", class_="src ltr")
     list_exaples = []
@@ -44,10 +43,10 @@ def parser_reverso(word):
 
 
 def perser_cambrige(word):
-    '''parsing data of word from cambridge.org'''
+    """parsing data of word from cambridge.org"""
     word_url = f"https://dictionary.cambridge.org/dictionary/english/{word}"
-    response_word = requests.get(word_url, headers=headers)
-    soup = BeautifulSoup(response_word.text, "lxml")  # html.parser
+    response_word = requests.get(word_url, timeout=5, headers=headers)
+    soup = BeautifulSoup(response_word.text, "lxml")
     data = soup.find("div", class_="pr entry-body__el")
 
     type_word = data.find("span", class_="pos dpos").text
@@ -57,10 +56,8 @@ def perser_cambrige(word):
     except AttributeError:
         example_sentence = parser_reverso(word)
     pronanciation = data.find("span", class_="ipa dipa lpr-2 lpl-1").text
-    sound_url = (
-        "https://dictionary.cambridge.org/"
-        + data.find("source", type="audio/mpeg")["src"]
-    )
+    sound = data.find("source", type="audio/mpeg")["src"]
+    sound_url = f"https://dictionary.cambridge.org/{sound}"
 
     get_sound_word(sound_url, word)
 
@@ -68,6 +65,7 @@ def perser_cambrige(word):
 
 
 def process_word(word):
+    """creating image and saving it in data folder"""
     print(f'The word "{word}" is loading...')
     try:
         type_word, definition, example_sentence, pronanciation = perser_cambrige(word)
@@ -80,6 +78,7 @@ def process_word(word):
 
 
 def main():
+    """creating anki deck"""
     my_model = genanki.Model(
         1686681943,
         "Basic",
@@ -108,7 +107,7 @@ def main():
     problem_words = []
 
     if os.path.exists("words.txt") is False:
-        print("'words.txt' doen't exist")
+        print("'words.txt' doesn't exist")
     elif os.stat("words.txt").st_size == 0:
         print('"words.txt" list is empty')
     else:
@@ -123,13 +122,7 @@ def main():
                 try:
                     if not os.path.exists(root_dir_data):
                         os.makedirs(root_dir_data)
-
-                    (
-                        type_word,
-                        definition,
-                        example_sentence,
-                        pronanciation,
-                    ) = process_word(word)
+                    type_word, definition, example_sentence, pronounciation = process_word(word)
                     print("Success\n")
                 except TypeError:
                     print("Processing Error\n")
@@ -141,7 +134,7 @@ def main():
                     fields=[
                         word,
                         type_word,
-                        pronanciation,
+                        pronounciation,
                         definition,
                         example_sentence,
                         f"[sound:{word}.mp3]",
@@ -157,9 +150,9 @@ def main():
             with open("problem_words.txt", "a", encoding="utf-8") as afile:
                 for word in problem_words:
                     afile.write(f"{word}\n")
-                print('Creat "problem_words.txt"\n')
+                print('Created "problem_words.txt"\n')
         else:
-            print("Problem words did't find")
+            print("Problem words didn't find")
 
         my_package.write_to_file("output.apkg")
         clean_words_txt()
