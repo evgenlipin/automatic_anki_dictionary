@@ -7,6 +7,7 @@ import requests
 from fake_useragent import UserAgent
 from bs4 import BeautifulSoup
 import genanki
+from colorama import Fore, Style
 
 from create_image import create_image_collage
 
@@ -107,9 +108,9 @@ def main():
     problem_words = []
 
     if os.path.exists("words.txt") is False:
-        print("'words.txt' doesn't exist")
+        print(f"{Fore.RED}'words.txt' doesn't exist{Style.RESET_ALL}")
     elif os.stat("words.txt").st_size == 0:
-        print('"words.txt" list is empty')
+        print(f"{Fore.RED}'words.txt' list is empty{Style.RESET_ALL}")
     else:
         with open("words.txt", "r", encoding="utf-8") as rfile:
             lines = [
@@ -123,9 +124,9 @@ def main():
                     if not os.path.exists(root_dir_data):
                         os.makedirs(root_dir_data)
                     type_word, definition, example_sentence, pronounciation = process_word(word)
-                    print("Success\n")
+                    print(f"{Fore.GREEN}Success{Style.RESET_ALL}\n")
                 except TypeError:
-                    print("Processing Error\n")
+                    print(f"{Fore.RED}Processing Error{Style.RESET_ALL}\n")
                     problem_words.append(word)
                     continue
 
@@ -150,14 +151,14 @@ def main():
             with open("problem_words.txt", "a", encoding="utf-8") as afile:
                 for word in problem_words:
                     afile.write(f"{word}\n")
-                print('Created "problem_words.txt"\n')
+                print(f'{Fore.YELLOW}Created "problem_words.txt"{Style.RESET_ALL}\n')
         else:
-            print("Problem words didn't find")
+            print(f"{Fore.GREEN}Problem words didn't find{Style.RESET_ALL}\n")
 
         my_package.write_to_file("output.apkg")
         clean_words_txt()
         shutil.rmtree(root_dir_data)
-        print("The program is finished")
+        print(f"{Fore.GREEN}The program is finished{Style.RESET_ALL}")
 
 
 if __name__ == "__main__":
