@@ -4,7 +4,7 @@ from asyncio import run, gather
 import shutil
 from PIL import Image
 
-import freeGPT
+# import freeGPT
 
 root_dir_images = f"{os.getcwd()}/data/images"
 

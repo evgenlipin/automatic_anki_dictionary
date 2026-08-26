@@ -2,4 +2,5 @@ __pycache__
 output.apkg
 .vscode
 problem_words.txt
-
+CLAUDE.md
+words.txt
