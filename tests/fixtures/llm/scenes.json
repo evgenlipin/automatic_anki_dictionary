@@ -1,0 +1,24 @@
+{
+ "id": "pllns_e1a69fcbe5b3aa970f2cb23a0e4c0d14",
+ "choices": [
+  {
+   "index": 0,
+   "message": {
+    "role": "assistant",
+    "content": "A red, circular aneurism of a newspaper head‑line, a bomb‑shell with a grumpy red face stamped on it, heads hit in a sudden sprint.  \n\nA man laces a broken kettle, slamming it against the counter while his hand holds a rubber duck throughout.  \n\nA kid pushes a box of Lego off the shelf, shattering it while a shattered chest opens with a hiss of dust.  \n\nA heavy iron weight drops from a shelf, smashing a porcelain cup, scattered shards glinting on the floor.",
+    "reasoning": "Need 4 lines each describing physical scene.",
+    "tool_calls": []
+   },
+   "finish_reason": "stop"
+  }
+ ],
+ "created": 1789812463,
+ "model": "gpt-oss-20b",
+ "object": "chat.completion",
+ "usage": {
+  "prompt_tokens": 432,
+  "completion_tokens": 127,
+  "total_tokens": 559
+ },
+ "user_tier": "anonymous"
+}

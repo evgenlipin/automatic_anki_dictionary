@@ -1,0 +1,44 @@
+# app      — боевой прогон на workspace/
+# try      — тот же код на .sandbox/ (пробные прогоны: до workspace/ физически не дотягивается)
+# test     — pytest без сети, папки с данными не монтируются
+# fixtures — скачать страницы словарей для тестов (в git они не лежат)
+
+x-base: &base
+  build: .
+  image: anki-dict
+  init: true   # иначе python — PID 1 и не получает сигналы как обычный процесс (Ctrl+C, docker stop)
+  # файлы в workspace/ должны принадлежать тебе, а не root; свой uid/gid — в docker-compose.override.yml
+  user: "${HOST_UID:-1000}:${HOST_GID:-1000}"
+  env_file:
+    - path: .env
+      required: false
+
+services:
+  app:
+    <<: *base
+    volumes:
+      - ./anki_dict:/app/anki_dict:ro
+      - ./workspace:/workspace
+      - /etc/localtime:/etc/localtime:ro   # имена бэкапов (output-<дата-время>.apkg) — по местному времени
+
+  try:
+    <<: *base
+    volumes:
+      - ./anki_dict:/app/anki_dict:ro
+      - ./.sandbox:/workspace
+      - /etc/localtime:/etc/localtime:ro
+
+  test:
+    <<: *base
+    entrypoint: ["python", "-m", "pytest"]
+    volumes:
+      - ./anki_dict:/app/anki_dict:ro
+      - ./tests:/app/tests:ro
+      - ./pytest.ini:/app/pytest.ini:ro
+
+  fixtures:
+    <<: *base
+    entrypoint: ["python", "tests/fetch_fixtures.py"]
+    volumes:
+      - ./anki_dict:/app/anki_dict:ro
+      - ./tests:/app/tests

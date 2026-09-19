@@ -1,0 +1,24 @@
+{
+ "id": "pllns_a3593b039cb5613fa8e0ef4ff08630c6",
+ "choices": [
+  {
+   "index": 0,
+   "message": {
+    "role": "assistant",
+    "content": "ignite",
+    "reasoning": "We think \"ignite\".",
+    "tool_calls": []
+   },
+   "finish_reason": "stop"
+  }
+ ],
+ "created": 1789812433,
+ "model": "gpt-oss-20b",
+ "object": "chat.completion",
+ "usage": {
+  "prompt_tokens": 342,
+  "completion_tokens": 16,
+  "total_tokens": 358
+ },
+ "user_tier": "anonymous"
+}

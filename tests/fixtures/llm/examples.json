@@ -1,0 +1,24 @@
+{
+ "id": "pllns_816b85499515f1585d93161b56c47f26",
+ "choices": [
+  {
+   "index": 0,
+   "message": {
+    "role": "assistant",
+    "content": "The doctor explained how the placenta attaches to the womb during early pregnancy.  \nShe felt a gentle flutter, a reminder that life was growing inside her womb.",
+    "reasoning": "Need to give 2 short natural sentences using \"womb\" meaning organ. Just two lines.",
+    "tool_calls": []
+   },
+   "finish_reason": "stop"
+  }
+ ],
+ "created": 1789812404,
+ "model": "gpt-oss-20b",
+ "object": "chat.completion",
+ "usage": {
+  "prompt_tokens": 359,
+  "completion_tokens": 61,
+  "total_tokens": 420
+ },
+ "user_tier": "anonymous"
+}

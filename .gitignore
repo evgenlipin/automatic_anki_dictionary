@@ -1,6 +1,19 @@
 __pycache__
-output.apkg
 .vscode
-problem_words.txt
 CLAUDE.md
-words.txt
+
+# токен pollinations
+.env
+
+# личные данные: слова, журналы, колода, бэкапы
+workspace/*
+!workspace/.gitkeep
+.sandbox/*
+!.sandbox/.gitkeep
+
+# uid/gid конкретной машины
+docker-compose.override.yml
+
+# страницы словарей для тестов — чужой контент, скачиваются: docker compose run --rm fixtures
+tests/fixtures/cambridge/
+tests/fixtures/wiktionary/
